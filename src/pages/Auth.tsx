@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
 const authSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  phone: z.string().regex(/^\+[1-9]\d{1,14}$/, "Invalid phone number format. Use international format (e.g., +1234567890)"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -19,7 +19,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
@@ -48,13 +48,12 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const validated = authSchema.parse({ email, password });
+      const validated = authSchema.parse({ phone, password });
       
       const { error } = await supabase.auth.signUp({
-        email: validated.email,
+        phone: validated.phone,
         password: validated.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
             name: name,
           },
@@ -83,10 +82,10 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const validated = authSchema.parse({ email, password });
+      const validated = authSchema.parse({ phone, password });
       
       const { error } = await supabase.auth.signInWithPassword({
-        email: validated.email,
+        phone: validated.phone,
         password: validated.password,
       });
 
@@ -128,15 +127,16 @@ const Auth = () => {
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signin-email">Email</Label>
+                  <Label htmlFor="signin-phone">Phone Number</Label>
                   <Input
-                    id="signin-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="signin-phone"
+                    type="tel"
+                    placeholder="+1234567890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     required
                   />
+                  <p className="text-xs text-muted-foreground">Use international format (e.g., +1234567890)</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signin-password">Password</Label>
@@ -172,15 +172,16 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-phone">Phone Number</Label>
                   <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="signup-phone"
+                    type="tel"
+                    placeholder="+1234567890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     required
                   />
+                  <p className="text-xs text-muted-foreground">Use international format (e.g., +1234567890)</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-password">Password</Label>
