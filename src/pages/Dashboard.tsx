@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Gift, LogOut, Heart, Send } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Gift, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Session } from "@supabase/supabase-js";
 
 const Dashboard = () => {
@@ -73,7 +72,7 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-2">
             Welcome back, {session?.user?.user_metadata?.name || "Friend"}!
@@ -81,71 +80,48 @@ const Dashboard = () => {
           <p className="text-muted-foreground">Ready to spread some joy today?</p>
         </div>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <Card className="p-6 bg-gradient-card border-none shadow-soft hover:shadow-warm transition-shadow cursor-pointer">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
-                <Send className="w-6 h-6 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-2">Gift a Meal</h3>
-                <p className="text-muted-foreground mb-4">
-                  Browse meals and send one to someone special
-                </p>
-                <Button className="bg-gradient-hero text-primary-foreground shadow-warm">
-                  Start Gifting
-                </Button>
-              </div>
-            </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate("/meals")}>
+            <CardHeader>
+              <CardTitle>Browse Meals</CardTitle>
+              <CardDescription>Find the perfect meal to gift</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full">Start Gifting</Button>
+            </CardContent>
           </Card>
 
-          <Card className="p-6 bg-gradient-card border-none shadow-soft hover:shadow-warm transition-shadow">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
-                <Heart className="w-6 h-6 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-2">Your Activity</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Meals Sent</span>
-                    <span className="font-semibold">0</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Meals Received</span>
-                    <span className="font-semibold">0</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate("/restaurant/register")}>
+            <CardHeader>
+              <CardTitle>Are you a Restaurant?</CardTitle>
+              <CardDescription>Join our platform and reach more customers</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button variant="outline" className="w-full">Register Your Restaurant</Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Activity</CardTitle>
+              <CardDescription>Gifts sent and received</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">No activity yet</p>
+            </CardContent>
           </Card>
         </div>
 
-        {/* Gift History */}
-        <Card className="p-6 bg-gradient-card border-none shadow-soft">
-          <Tabs defaultValue="sent" className="w-full">
-            <TabsList className="mb-6">
-              <TabsTrigger value="sent">Sent Gifts</TabsTrigger>
-              <TabsTrigger value="received">Received Gifts</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="sent" className="space-y-4">
-              <div className="text-center py-12 text-muted-foreground">
-                <Gift className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>No gifts sent yet. Start spreading joy!</p>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="received" className="space-y-4">
-              <div className="text-center py-12 text-muted-foreground">
-                <Heart className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>No gifts received yet. Share your profile with friends!</p>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </Card>
-      </div>
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Recent Gifts</h2>
+          <Card>
+            <CardContent className="py-8 text-center">
+              <p className="text-muted-foreground">You haven't sent or received any gifts yet.</p>
+              <Button className="mt-4" onClick={() => navigate("/meals")}>Send Your First Gift</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 };

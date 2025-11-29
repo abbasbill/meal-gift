@@ -41,16 +41,21 @@ const Index = () => {
               <p className="text-xl text-muted-foreground">
                 Gift someone special a delicious meal. Because sharing food is sharing love.
               </p>
-              <div className="flex gap-4">
-                <Link to="/auth">
+              <div className="flex flex-wrap gap-4">
+                <Link to="/meals">
                   <Button size="lg" className="bg-gradient-hero text-primary-foreground shadow-warm hover:opacity-90 transition-opacity">
                     <Gift className="mr-2 h-5 w-5" />
-                    Gift a Meal Now
+                    Browse Meals
                   </Button>
                 </Link>
                 <Link to="/auth">
                   <Button size="lg" variant="outline">
-                    Learn More
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/restaurant/register">
+                  <Button size="lg" variant="secondary">
+                    For Restaurants
                   </Button>
                 </Link>
               </div>
