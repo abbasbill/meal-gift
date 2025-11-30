@@ -231,7 +231,11 @@ export default function AdminDashboard() {
                 </TableHeader>
                 <TableBody>
                   {restaurants.map((restaurant) => (
-                    <TableRow key={restaurant.id}>
+                    <TableRow 
+                      key={restaurant.id}
+                      className="cursor-pointer"
+                      onClick={() => navigate(`/admin/restaurant/${restaurant.id}`)}
+                    >
                       <TableCell className="font-medium">{restaurant.name}</TableCell>
                       <TableCell>{restaurant.address || "N/A"}</TableCell>
                       <TableCell>{restaurant.phone || "N/A"}</TableCell>
@@ -243,7 +247,7 @@ export default function AdminDashboard() {
                       <TableCell>
                         {new Date(restaurant.created_at).toLocaleDateString()}
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-end gap-2">
                           {!restaurant.is_active ? (
                             <Button
