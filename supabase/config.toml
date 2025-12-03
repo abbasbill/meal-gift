@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.verify-registration-payment]
 verify_jwt = false
+
+[functions.create-gift-checkout]
+verify_jwt = false
+
+[functions.verify-gift-payment]
+verify_jwt = false

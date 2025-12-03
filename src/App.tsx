@@ -13,6 +13,8 @@ import RestaurantMenu from "./pages/RestaurantMenu";
 import AdminDashboard from "./pages/AdminDashboard";
 import RestaurantProfile from "./pages/RestaurantProfile";
 import RestaurantRegisterSuccess from "./pages/RestaurantRegisterSuccess";
+import GiftMeal from "./pages/GiftMeal";
+import GiftSuccess from "./pages/GiftSuccess";
 import MyGifts from "./pages/MyGifts";
 import NotFound from "./pages/NotFound";
 
@@ -36,6 +38,8 @@ const App = () => (
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/restaurant/:id" element={<RestaurantProfile />} />
           <Route path="/my-gifts" element={<MyGifts />} />
+          <Route path="/gift/:mealId" element={<GiftMeal />} />
+          <Route path="/gift/success" element={<GiftSuccess />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
