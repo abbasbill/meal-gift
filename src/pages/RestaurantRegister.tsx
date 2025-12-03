@@ -84,48 +84,32 @@ export default function RestaurantRegister() {
         }
       }
 
-      // Create restaurant
-      const { data: restaurant, error: restaurantError } = await supabase
-        .from("restaurants")
-        .insert({
-          owner_id: user.id,
-          name: formData.name,
-          description: formData.description,
-          address: formData.address,
-          phone: formData.phone,
-          image_url: imageUrl,
-          is_active: false, // Requires admin approval
-        })
-        .select()
-        .single();
-
-      if (restaurantError) throw restaurantError;
-
-      // Assign restaurant_owner role
-      const { error: roleError } = await supabase
-        .from("user_roles")
-        .insert({
-          user_id: user.id,
-          role: "restaurant_owner",
-        });
-
-      if (roleError && !roleError.message.includes("duplicate")) {
-        throw roleError;
-      }
-
-      toast({
-        title: "Success!",
-        description: "Your restaurant has been registered and is pending approval.",
+      // Create checkout session with restaurant data
+      const { data, error } = await supabase.functions.invoke("create-registration-checkout", {
+        body: {
+          restaurantData: {
+            name: formData.name,
+            description: formData.description,
+            address: formData.address,
+            phone: formData.phone,
+            image_url: imageUrl,
+          },
+        },
       });
 
-      navigate("/restaurant/dashboard");
+      if (error) throw error;
+
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Failed to create checkout session");
+      }
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to register restaurant",
+        description: error.message || "Failed to start registration",
         variant: "destructive",
       });
-    } finally {
       setLoading(false);
     }
   };
@@ -219,10 +203,11 @@ export default function RestaurantRegister() {
               </div>
             </div>
 
-            <div className="bg-muted p-4 rounded-lg">
+            <div className="bg-muted p-4 rounded-lg space-y-2">
+              <p className="text-sm font-medium">Registration Fee: $49.99</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Note:</strong> Your restaurant will be reviewed by our team before going live.
-                You'll be notified once approved.
+                <strong>Note:</strong> A one-time registration fee is required. Your restaurant will be 
+                reviewed by our team before going live. You'll be notified once approved.
               </p>
             </div>
 
@@ -236,7 +221,7 @@ export default function RestaurantRegister() {
                 Cancel
               </Button>
               <Button type="submit" disabled={loading} className="flex-1">
-                {loading ? "Registering..." : "Register Restaurant"}
+                {loading ? "Processing..." : "Pay & Register ($49.99)"}
               </Button>
             </div>
           </form>
