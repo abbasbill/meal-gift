@@ -72,6 +72,72 @@ export type Database = {
           },
         ]
       }
+      meal_requests: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          delivered_at: string | null
+          delivery_address: string
+          donor_id: string | null
+          id: string
+          matched_at: string | null
+          meal_description: string
+          notes: string | null
+          on_the_way_at: string | null
+          preparing_at: string | null
+          recipient_id: string
+          recipient_phone: string | null
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          delivery_address: string
+          donor_id?: string | null
+          id?: string
+          matched_at?: string | null
+          meal_description: string
+          notes?: string | null
+          on_the_way_at?: string | null
+          preparing_at?: string | null
+          recipient_id: string
+          recipient_phone?: string | null
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          delivery_address?: string
+          donor_id?: string | null
+          id?: string
+          matched_at?: string | null
+          meal_description?: string
+          notes?: string | null
+          on_the_way_at?: string | null
+          preparing_at?: string | null
+          recipient_id?: string
+          recipient_phone?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_requests_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meal_requests_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meals: {
         Row: {
           created_at: string
