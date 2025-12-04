@@ -16,6 +16,9 @@ import RestaurantRegisterSuccess from "./pages/RestaurantRegisterSuccess";
 import GiftMeal from "./pages/GiftMeal";
 import GiftSuccess from "./pages/GiftSuccess";
 import MyGifts from "./pages/MyGifts";
+import RequestMeal from "./pages/RequestMeal";
+import DonorDashboard from "./pages/DonorDashboard";
+import DeliveryStatus from "./pages/DeliveryStatus";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +43,9 @@ const App = () => (
           <Route path="/my-gifts" element={<MyGifts />} />
           <Route path="/gift/:mealId" element={<GiftMeal />} />
           <Route path="/gift/success" element={<GiftSuccess />} />
+          <Route path="/request-meal" element={<RequestMeal />} />
+          <Route path="/donor-dashboard" element={<DonorDashboard />} />
+          <Route path="/delivery-status/:requestId" element={<DeliveryStatus />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

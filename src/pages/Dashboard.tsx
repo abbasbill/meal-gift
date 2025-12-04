@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gift, LogOut, ChefHat, Shield, Inbox } from "lucide-react";
+import { Gift, LogOut, ChefHat, Shield, Inbox, Heart, UtensilsCrossed } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "@supabase/supabase-js";
 
@@ -125,6 +125,34 @@ const Dashboard = () => {
                 <div>
                   <CardTitle>My Gifts</CardTitle>
                   <CardDescription>View & redeem received gifts</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow border-destructive/30" onClick={() => navigate("/request-meal")}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-destructive/10 rounded-lg flex items-center justify-center">
+                  <UtensilsCrossed className="h-5 w-5 text-destructive" />
+                </div>
+                <div>
+                  <CardTitle>Request a Meal</CardTitle>
+                  <CardDescription>Get help from a donor</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow border-primary/30" onClick={() => navigate("/donor-dashboard")}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Heart className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle>Become a Donor</CardTitle>
+                  <CardDescription>Help someone with a meal</CardDescription>
                 </div>
               </div>
             </CardHeader>
